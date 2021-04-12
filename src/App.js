@@ -3,11 +3,10 @@ import classNames from 'classnames';
 import { Route, useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
-import { AppTopbar } from './AppTopbar';
-import { AppFooter } from './AppFooter';
-import { AppMenu } from './AppMenu';
-import { AppProfile } from './AppProfile';
-import { AppConfig } from './AppConfig';
+import { AppTopbar } from './pages/AppTopbar';
+import { AppFooter } from './pages/AppFooter';
+import { AppMenu } from './pages/AppMenu';
+import { AppProfile } from './pages/AppProfile';
 
 import { Dashboard } from './components/Dashboard';
 import { ButtonDemo } from './components/ButtonDemo';
@@ -62,8 +61,8 @@ const App = () => {
     const [staticMenuInactive, setStaticMenuInactive] = useState(false);
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [mobileMenuActive, setMobileMenuActive] = useState(false);
-    const [inputStyle, setInputStyle] = useState('outlined');
-    const [ripple, setRipple] = useState(false);
+    const [inputStyle, setInputStyle] = useState('filled');
+    const [ripple, setRipple] = useState(true);
     const sidebar = useRef();
 
     const history = useHistory();
@@ -256,7 +255,7 @@ const App = () => {
         return true;
     }
 
-    const logo = layoutColorMode === 'dark' ? 'assets/layout/images/logo-white.svg' : 'assets/layout/images/logo.svg';
+    const logo = 'assets/layout/images/logo.png';
 
     const wrapperClass = classNames('layout-wrapper', {
         'layout-overlay': layoutMode === 'overlay',
@@ -280,15 +279,15 @@ const App = () => {
             <CSSTransition classNames="layout-sidebar" timeout={{ enter: 200, exit: 200 }} in={isSidebarVisible()} unmountOnExit>
                 <div ref={sidebar} className={sidebarClassName} onClick={onSidebarClick}>
                     <div className="layout-logo" style={{cursor: 'pointer'}} onClick={() => history.push('/')}>
-                        <img alt="Logo" src={logo} />
+                        <img alt="Logo" src={logo} height="50" />
                     </div>
                     <AppProfile />
                     <AppMenu model={menu} onMenuItemClick={onMenuItemClick} />
                 </div>
             </CSSTransition>
 
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
-                layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
+            {/* <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
+                layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} /> */}
 
             <div className="layout-main">
                 <Route path="/" exact component={Dashboard} />
