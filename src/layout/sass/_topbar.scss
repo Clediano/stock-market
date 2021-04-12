@@ -109,6 +109,7 @@
         cursor: pointer;
         display: inline-block;
         text-decoration: none;
+        box-shadow: 0 0 0 0;
         color: $topbarItemColor;
         transition: color $transitionDuration;
 

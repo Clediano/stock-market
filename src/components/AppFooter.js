@@ -1,10 +1,9 @@
 import React from 'react';
 
 export const AppFooter = () => {
-
     return (
         <div className="layout-footer">
-            <span className="footer-text" style={{ 'marginRight': '5px' }}>React - Stock Market</span>
+            <span className="footer-text" style={{ 'marginRight': '5px' }}>Stock Market</span>
         </div>
     );
 }
