@@ -7,7 +7,7 @@ import { AppTopbar } from './components/AppTopbar';
 import { AppFooter } from './components/AppFooter';
 import { AppMenu } from './components/AppMenu';
 
-import { MainPage } from './pages/MainPage';
+import MainPage from './pages/MainPage/index.jsx';
 import { EmptyPage } from './pages/EmptyPage';
 import { AppConfig } from './components/AppConfig';
 
