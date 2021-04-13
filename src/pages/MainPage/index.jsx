@@ -7,6 +7,12 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Skeleton } from 'primereact/skeleton';
 import { Divider } from 'primereact/divider';
+import { Avatar } from 'primereact/avatar';
+import { Badge } from 'primereact/badge';
+import { Tag } from 'primereact/tag';
+
+import { findEndpoint } from './service';
+import { debounce } from 'lodash';
 
 class MainPage extends Component {
 
@@ -15,12 +21,37 @@ class MainPage extends Component {
 
         autoBind(this);
 
-        this.state = {
+        this.searchOrganization = debounce(this.searchOrganization.bind(this), 250);
 
+        this.state = {
+            symbol: '',
+            loading: false,
+            organizations: []
         }
     }
 
+    componentDidUpdate(_, prevState) {
+        if (prevState.symbol !== this.state.symbol) {
+            this.searchOrganization();
+        }
+    }
+
+    searchOrganization() {
+        this.setLoading(true);
+        findEndpoint(this.state.symbol, organizations => {
+            console.log(organizations)
+            this.setState({ organizations, loading: false })
+        });
+    }
+
+    setLoading(loading) {
+        this.setState({ loading });
+    }
+
     render() {
+
+        const { loading, symbol, organizations } = this.state;
+
         return (
             <div className="p-grid">
                 <div className="p-col-12">
@@ -29,72 +60,74 @@ class MainPage extends Component {
                         title="Get summary"
                         subTitle="Enter a symbol and get a little summary of him"
                     >
-                        <div className="p-fluid">
-                            <div className="p-field">
+                        <div className="p-fluid p-formgrid p-grid">
+                            <div className="p-field p-col-12">
                                 <div className="p-inputgroup">
                                     <span className="p-inputgroup-addon">
                                         <i className="pi pi-search"></i>
                                     </span>
                                     <InputText
-                                        size="lage"
-                                        id="username1"
-                                        aria-describedby="username1-help"
-                                        className="p-d-block"
-                                        placeholder="Enter a symbol (Exemple: HGLG11)"
+                                        id="symbol"
+                                        autoFocus
+                                        onChange={e => this.setState({ symbol: e.target.value })}
+                                        value={this.state.symbol}
+                                        aria-describedby="symbol-help"
+                                        placeholder="Enter a symbol (Exemple: AMRN)"
                                     />
-                                    <Button label="Search" />
+                                    <Button label="Search" onClick={this.searchOrganization} />
                                 </div>
-                                <small id="username1-help" className="p-d-block">Enter a symbol and click on search button</small>
+                                <small id="symbol-help" className="p-d-block">Enter a symbol and click on search button</small>
                             </div>
                         </div>
-
-                        {/* <div className="p-m-6" /> */}
-                        <Divider align="center" type="dashed">
-                            <b>Result of search</b>
-                        </Divider>
-
-                        <div className="p-fluid">
-                            <div className="p-mb-3">
-                                <div className="p-d-flex p-ai-center">
-                                    <Skeleton shape="circle" size="4rem" className="p-mr-2"></Skeleton>
-                                    <div style={{ flex: '1' }}>
-                                        <Skeleton width="100%" className="p-mb-2"></Skeleton>
-                                        <Skeleton width="75%"></Skeleton>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-mb-3">
-                                <div className="p-d-flex p-ai-center">
-                                    <Skeleton shape="circle" size="4rem" className="p-mr-2"></Skeleton>
-                                    <div style={{ flex: '1' }}>
-                                        <Skeleton width="100%" className="p-mb-2"></Skeleton>
-                                        <Skeleton width="75%"></Skeleton>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-mb-3">
-                                <div className="p-d-flex p-ai-center">
-                                    <Skeleton shape="circle" size="4rem" className="p-mr-2"></Skeleton>
-                                    <div style={{ flex: '1' }}>
-                                        <Skeleton width="100%" className="p-mb-2"></Skeleton>
-                                        <Skeleton width="75%"></Skeleton>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="p-d-flex p-ai-center">
-                                    <Skeleton shape="circle" size="4rem" className="p-mr-2"></Skeleton>
-                                    <div style={{ flex: '1' }}>
-                                        <Skeleton width="100%" className="p-mb-2"></Skeleton>
-                                        <Skeleton width="75%" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
                     </Card>
+
+                    {symbol && (
+                        <>
+                            <Divider align="center">
+                                <b>Result of search</b>
+                            </Divider>
+
+                            <Card className="p-shadow-24">
+                                {loading ? (
+                                    <div className="p-fluid">
+                                        <div className="p-mb-3">
+                                            <div className="p-d-flex p-ai-center">
+                                                <Skeleton shape="circle" size="4rem" className="p-mr-2" />
+                                                <div style={{ flex: '1' }}>
+                                                    <Skeleton width="100%" className="p-mb-2" />
+                                                    <Skeleton width="75%" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    organizations?.length > 0 ? (
+                                        organizations.map((org, index) => {
+                                            return (
+                                                <>
+                                                    <div className="p-card p-p-3 p-my-3 p-d-flex p-jc-between" key={index}>
+                                                        <div>
+                                                            <h5><b>{org.name}</b></h5>
+                                                            <p>
+                                                                <div>{org.type}</div>
+                                                                <div>{`${org.region} - ${org.currency}`}</div>
+                                                            </p>
+                                                            <Tag icon="pi pi-clock" value={org.marketOpen} severity="success" className="p-mr-2" />
+                                                            <Tag icon="pi pi-clock" value={org.marketClose} severity="danger" />
+                                                        </div>
+                                                        <div className="p-d-flex p-flex-column p-jc-between p-ai-end">
+                                                            <h6><b>{org.symbol}</b></h6>
+                                                            <Button label="SEE MORE" iconPos="right" icon="pi pi-angle-right" className="p-button-text p-button-sm" />
+                                                        </div>
+                                                    </div>
+                                                </>
+                                            )
+                                        })
+                                    ) : <div className="p-text-center">No data found</div>
+                                )}
+                            </Card>
+                        </>
+                    )}
                 </div>
             </div>
         );
