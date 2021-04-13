@@ -24,6 +24,7 @@
         "prismjs": "^1.15.0",
         "react": "^17.0.1",
         "react-app-polyfill": "^2.0.0",
+        "react-autobind": "^1.0.6",
         "react-dom": "^17.0.1",
         "react-router-dom": "^5.2.0",
         "react-scripts": "4.0.0",

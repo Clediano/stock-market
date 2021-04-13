@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import autoBind from "react-autobind";
+
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
@@ -9,6 +12,8 @@ class MainPage extends Component {
 
     constructor(props) {
         super(props);
+
+        autoBind(this);
 
         this.state = {
 
