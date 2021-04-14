@@ -4,14 +4,14 @@ import { APIFunctionType, APIKey } from '../../../utilities/constants';
 export function findEndpoint(keyword, onSuccess, onError) {
     api.get(`query?function=${APIFunctionType.SYMBOL_SEARCH}&keywords=${keyword}&apikey=${APIKey}`)
         .then(response => {
-            onSuccess && onSuccess(treatData(response.data))
+            onSuccess && onSuccess(modifyData(response.data))
         })
         .catch(error => {
             onError && onError(error)
         })
 }
 
-function treatData({ bestMatches }) {
+function modifyData({ bestMatches }) {
     return bestMatches.map(object => {
         let newObject = {};
         Object.entries(object).forEach(item => {

@@ -7,7 +7,8 @@ import { AppTopbar } from './components/AppTopbar';
 import { AppFooter } from './components/AppFooter';
 import { AppMenu } from './components/AppMenu';
 
-import MainPage from './pages/MainPage/index.jsx';
+import MainPage from './pages/MainPage';
+import DetailPage from './pages/DetailPage';
 import { EmptyPage } from './pages/EmptyPage';
 import { AppConfig } from './components/AppConfig';
 
@@ -102,7 +103,8 @@ const App = () => {
     }
 
     const menu = [
-        { label: 'Main', icon: 'pi pi-fw pi-home', to: '/' },
+        { label: 'Stock market', icon: 'pi pi-fw pi-money-bill', to: '/' },
+        { label: 'Todo list', icon: 'pi pi-fw pi-check-circle', to: '/todo' },
     ];
 
     const addClass = (element, className) => {
@@ -136,7 +138,7 @@ const App = () => {
         return true;
     }
 
-    const logo = 'assets/layout/images/logo.svg';
+    const logo = 'assets/layout/images/logo.png';
 
     const wrapperClass = classNames('layout-wrapper', {
         'layout-overlay': layoutMode === 'overlay',
@@ -165,7 +167,7 @@ const App = () => {
             >
                 <div ref={sidebar} className={sidebarClassName} onClick={onSidebarClick}>
                     <div className="layout-logo" style={{ cursor: 'pointer' }} onClick={() => history.push('/')}>
-                        <img alt="Logo" src={logo} color="#fff" height="100" />
+                        <img alt="Logo" src={logo} width="160" />
                     </div>
                     <AppMenu
                         model={menu}
@@ -187,7 +189,7 @@ const App = () => {
 
             <div className="layout-main">
                 <Route path="/" exact component={MainPage} />
-                <Route path="/company" exact component={MainPage} />
+                <Route path="/company" exact component={DetailPage} />
                 <Route path="/empty" exact component={EmptyPage} />
             </div>
 

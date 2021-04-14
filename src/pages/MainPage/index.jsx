@@ -8,9 +8,10 @@ import { Button } from 'primereact/button';
 import { Skeleton } from 'primereact/skeleton';
 import { Divider } from 'primereact/divider';
 import { Tag } from 'primereact/tag';
+import { debounce } from 'lodash';
+import { withRouter } from "react-router";
 
 import { findEndpoint } from './service';
-import { debounce } from 'lodash';
 
 class MainPage extends Component {
 
@@ -71,7 +72,12 @@ class MainPage extends Component {
                                         aria-describedby="symbol-help"
                                         placeholder="Enter a symbol (Exemple: AMRN)"
                                     />
-                                    <Button label="Search" onClick={this.searchOrganization} />
+                                    <Button
+                                        label="Search"
+                                        disabled={Boolean(loading && symbol)}
+                                        icon={Boolean(loading && symbol) ? "pi pi-spin pi-spinner" : "pi pi-search"}
+                                        onClick={this.searchOrganization}
+                                    />
                                 </div>
                                 <small id="symbol-help" className="p-d-block">Enter a symbol and click on search button</small>
                             </div>
@@ -113,7 +119,13 @@ class MainPage extends Component {
                                                     </div>
                                                     <div className="p-d-flex p-flex-column p-jc-between p-ai-end">
                                                         <h6><b>{org.symbol}</b></h6>
-                                                        <Button label="SEE MORE" iconPos="right" icon="pi pi-angle-right" className="p-button-text p-button-sm" />
+                                                        <Button
+                                                            label="SEE MORE"
+                                                            iconPos="right"
+                                                            icon="pi pi-angle-right"
+                                                            className="p-button-text p-button-sm"
+                                                            onClick={() => this.props.history.push(`/company?symbol=${org.symbol}`)}
+                                                        />
                                                     </div>
                                                 </div>
                                             )
@@ -129,4 +141,4 @@ class MainPage extends Component {
     }
 }
 
-export default MainPage;
+export default withRouter(MainPage);
