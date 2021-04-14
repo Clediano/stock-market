@@ -9,7 +9,8 @@ import { AppMenu } from './components/AppMenu';
 
 import MainPage from './pages/MainPage';
 import DetailPage from './pages/DetailPage';
-import { EmptyPage } from './pages/EmptyPage';
+import TodoPage from './pages/TodoPage';
+import { EmptyPage } from './pages/EmptyPage/';
 import { AppConfig } from './components/AppConfig';
 
 import PrimeReact from 'primereact/api';
@@ -190,6 +191,7 @@ const App = () => {
             <div className="layout-main">
                 <Route path="/" exact component={MainPage} />
                 <Route path="/company" exact component={DetailPage} />
+                <Route path="/todo" exact component={TodoPage} />
                 <Route path="/empty" exact component={EmptyPage} />
             </div>
 

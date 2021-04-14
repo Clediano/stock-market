@@ -1,5 +1,5 @@
 import api from '../../../service/axios';
-import { APIFunctionType, APIKey } from '../../../utilities/constants';
+import { APIFunctionType, APIKey } from '../../../configuration/market.config';
 
 export function findEndpoint(keyword, onSuccess, onError) {
     api.get(`query?function=${APIFunctionType.SYMBOL_SEARCH}&keywords=${keyword}&apikey=${APIKey}`)

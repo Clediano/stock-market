@@ -3,12 +3,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { HashRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom';
+import firebase from "firebase/app";
+import "firebase/firestore";
+import { FirestoreProvider } from "@react-firebase/firestore";
+import { firebaseConfig } from "./configuration/firebase.config";
 
 ReactDOM.render(
-    <HashRouter>
-        <App />
-    </HashRouter>,
+    <FirestoreProvider {...firebaseConfig} firebase={firebase}>
+        <HashRouter>
+            <App />
+        </HashRouter>
+    </FirestoreProvider>,
     document.getElementById('root')
 );
 

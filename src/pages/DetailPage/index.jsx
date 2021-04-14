@@ -9,7 +9,7 @@ import { Divider } from 'primereact/divider';
 import { withRouter } from "react-router";
 
 import { findCompanyOverview, findEarnings } from './service';
-import { formatDate } from '../../utilities/formatters';
+import { formatDateISOToDate } from '../../utilities/formatters';
 import { Skeleton } from 'primereact/skeleton';
 
 const chartOptions = {
@@ -72,7 +72,7 @@ class DetailPage extends Component {
 
         findEarnings(symbol, earning => {
             const dataAnnualEarningChart = {
-                labels: earning.annualEarnings?.map(earn => formatDate(earn.fiscalDateEnding)),
+                labels: earning.annualEarnings?.map(earn => formatDateISOToDate(earn.fiscalDateEnding)),
                 datasets: [{
                     label: "Earnings Per Share",
                     data: earning.annualEarnings?.map(earn => earn.reportedEPS),
@@ -82,7 +82,7 @@ class DetailPage extends Component {
             };
 
             const dataQuarterlyEarningsChart = {
-                labels: earning.quarterlyEarnings?.map(earn => formatDate(earn.reportedDate)),
+                labels: earning.quarterlyEarnings?.map(earn => formatDateISOToDate(earn.reportedDate)),
                 datasets: [
                     {
                         label: "Estimated EPS",
