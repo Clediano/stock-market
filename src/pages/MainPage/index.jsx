@@ -7,8 +7,6 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { Skeleton } from 'primereact/skeleton';
 import { Divider } from 'primereact/divider';
-import { Avatar } from 'primereact/avatar';
-import { Badge } from 'primereact/badge';
 import { Tag } from 'primereact/tag';
 
 import { findEndpoint } from './service';
@@ -39,7 +37,6 @@ class MainPage extends Component {
     searchOrganization() {
         this.setLoading(true);
         findEndpoint(this.state.symbol, organizations => {
-            console.log(organizations)
             this.setState({ organizations, loading: false })
         });
     }
@@ -104,23 +101,21 @@ class MainPage extends Component {
                                     organizations?.length > 0 ? (
                                         organizations.map((org, index) => {
                                             return (
-                                                <>
-                                                    <div className="p-card p-p-3 p-my-3 p-d-flex p-jc-between" key={index}>
-                                                        <div>
-                                                            <h5><b>{org.name}</b></h5>
-                                                            <p>
-                                                                <div>{org.type}</div>
-                                                                <div>{`${org.region} - ${org.currency}`}</div>
-                                                            </p>
-                                                            <Tag icon="pi pi-clock" value={org.marketOpen} severity="success" className="p-mr-2" />
-                                                            <Tag icon="pi pi-clock" value={org.marketClose} severity="danger" />
-                                                        </div>
-                                                        <div className="p-d-flex p-flex-column p-jc-between p-ai-end">
-                                                            <h6><b>{org.symbol}</b></h6>
-                                                            <Button label="SEE MORE" iconPos="right" icon="pi pi-angle-right" className="p-button-text p-button-sm" />
-                                                        </div>
+                                                <div className="p-card p-p-3 p-mb-3 p-d-flex p-jc-between" key={index}>
+                                                    <div>
+                                                        <h5><b>{org.name}</b></h5>
+                                                        <p>
+                                                            <span className="p-d-block">{org.type}</span>
+                                                            <span className="p-d-block">{`${org.region} - ${org.currency}`}</span>
+                                                        </p>
+                                                        <Tag icon="pi pi-clock" value={org.marketOpen} severity="success" className="p-mr-2" />
+                                                        <Tag icon="pi pi-clock" value={org.marketClose} severity="danger" />
                                                     </div>
-                                                </>
+                                                    <div className="p-d-flex p-flex-column p-jc-between p-ai-end">
+                                                        <h6><b>{org.symbol}</b></h6>
+                                                        <Button label="SEE MORE" iconPos="right" icon="pi pi-angle-right" className="p-button-text p-button-sm" />
+                                                    </div>
+                                                </div>
                                             )
                                         })
                                     ) : <div className="p-text-center">No data found</div>

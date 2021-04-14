@@ -187,6 +187,7 @@ const App = () => {
 
             <div className="layout-main">
                 <Route path="/" exact component={MainPage} />
+                <Route path="/company" exact component={MainPage} />
                 <Route path="/empty" exact component={EmptyPage} />
             </div>
 

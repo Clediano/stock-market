@@ -13,10 +13,12 @@ export function findEndpoint(keyword, onSuccess, onError) {
 
 function treatData({ bestMatches }) {
     return bestMatches.map(object => {
-        return Object.entries(object).map(item => {
+        let newObject = {};
+        Object.entries(object).forEach(item => {
             const name = item[0].split(" ")[1];
             const value = item[1];
-            return { [name]: value }
-        })
+            newObject[name] = value;
+        });
+        return newObject;
     })
 }
