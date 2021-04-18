@@ -1,16 +1,23 @@
 import { addSeconds, format, parseISO } from "date-fns";
 
-const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
-
-export const formatCurrency = (value) => {
-    return formatter.format(value);
-};
+export const formatDate = (date, formatStr = "MM/dd/yyyy") => {
+    if (date) {
+        return format(date, formatStr);
+    }
+    return "";
+}
 
 export const formatDateISOToDate = (dateISOFormat) => {
-    return format(parseISO(dateISOFormat), 'MM/dd/yyyy');
+    if (dateISOFormat) {
+        return format(parseISO(dateISOFormat), 'MM/dd/yyyy');
+    }
+    return "";
 }
 
 export const formatSecondsToDate = (seconds) => {
-    const date = addSeconds(new Date(0), seconds);
-    return format(date, 'MM/dd/yyyy');
+    if (seconds) {
+        const date = addSeconds(new Date(0), seconds);
+        return format(date, 'MM/dd/yyyy');
+    }
+    return "";
 }

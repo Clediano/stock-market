@@ -7,8 +7,8 @@ import { AppTopbar } from './components/AppTopbar';
 import { AppFooter } from './components/AppFooter';
 import { AppMenu } from './components/AppMenu';
 
-import MainPage from './pages/MainPage';
-import DetailPage from './pages/DetailPage';
+import MarketMainPage from './pages/MarketMainPage';
+import MarketDetailPage from './pages/MarketDetailPage';
 import TodoPage from './pages/TodoPage';
 import { EmptyPage } from './pages/EmptyPage/';
 import { AppConfig } from './components/AppConfig';
@@ -189,8 +189,8 @@ const App = () => {
             />
 
             <div className="layout-main">
-                <Route path="/" exact component={MainPage} />
-                <Route path="/company" exact component={DetailPage} />
+                <Route path="/company" exact component={MarketMainPage} />
+                <Route path="/company/detail" exact component={MarketDetailPage} />
                 <Route path="/todo" exact component={TodoPage} />
                 <Route path="/empty" exact component={EmptyPage} />
             </div>
