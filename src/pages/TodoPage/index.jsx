@@ -5,6 +5,7 @@ import autoBind from "react-autobind";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { confirmPopup } from 'primereact/confirmpopup';
+import { Toast } from 'primereact/toast';
 
 import { FirestoreCollection } from "@react-firebase/firestore";
 
@@ -21,6 +22,8 @@ class TodoPage extends Component {
         super(props);
 
         autoBind(this);
+
+        this.toast = React.createRef()
 
         this.state = {
             isModalFormVisible: false,
@@ -51,7 +54,16 @@ class TodoPage extends Component {
     }
 
     deleteTask(task, event) {
-        this.confirm(event, () => deleteTask(task))
+        this.confirm(event, () => {
+            deleteTask(task, () => {
+                this.toast.current.show({
+                    severity: 'success',
+                    summary: 'Application informs',
+                    detail: 'Task has been deleted',
+                    life: 3000
+                });
+            });
+        })
     }
 
     pinOrUnpinTask(task) {
@@ -75,6 +87,7 @@ class TodoPage extends Component {
     render() {
         return (
             <>
+                <Toast ref={this.toast} />
                 <div className="p-grid">
                     <div className="p-col-12">
                         <Card
