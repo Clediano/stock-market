@@ -1,7 +1,6 @@
 import React from 'react';
 
 export const EmptyPage = () => {
-
     return (
         <div className="p-grid">
             <div className="p-col-12">
